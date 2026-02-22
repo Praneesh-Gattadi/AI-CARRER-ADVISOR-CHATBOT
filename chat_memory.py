@@ -1,9 +1,4 @@
-# ================== chat_memory.py ==================
-# Session-based conversation memory management
-# Isolated from UI and API layers
-
 import streamlit as st
-
 
 class ChatMemory:
     """
