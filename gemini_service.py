@@ -1,4 +1,3 @@
-# ================== gemini_service.py ==================
 import json
 import requests
 from loguru import logger
@@ -7,7 +6,7 @@ class GeminiService:
     def __init__(self, api_key: str):
         self.api_key = api_key
         self.api_url = "https://openrouter.ai/api/v1/chat/completions"
-        logger.info("✅ OpenRouter proxy initialized")
+        logger.info("OpenRouter proxy initialized")
 
     def generate_response(self, prompt: str) -> str:
         logger.info(f"📤 Sending request to OpenRouter | prompt_length={len(prompt)}")
@@ -49,7 +48,7 @@ class GeminiService:
 
                 if "choices" in data and len(data["choices"]) > 0:
                     text = data["choices"][0]["message"]["content"]
-                    logger.info(f"✅ Response received successfully from {model_id}")
+                    logger.info(f"Response received successfully from {model_id}")
                     return text
 
             except requests.exceptions.HTTPError as e:
