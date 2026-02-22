@@ -1,8 +1,3 @@
-# ================== prompt_manager.py ==================
-# Manages all prompt engineering logic
-# Configurable, reusable, and domain-specific
-
-
 class PromptManager:
     """
     Centralizes all prompt engineering for the Career Advisor chatbot.
@@ -11,7 +6,6 @@ class PromptManager:
     - Prompts are configurable and separated from API/UI logic
     """
 
-    # ── System Prompt ──────────────────────────────────────────────────────────
     SYSTEM_PROMPT = """You are an expert Career Advisor AI assistant.
 
 ROLE:
@@ -42,11 +36,8 @@ Always structure your responses clearly using the following sections (only inclu
 
 Keep each section concise. Use bullet points for clarity.
 """
-
-    # ── History limit ──────────────────────────────────────────────────────────
     HISTORY_LIMIT = 10   # Number of recent messages to include for context
 
-    # ── Prompt Builder ─────────────────────────────────────────────────────────
     @classmethod
     def build_prompt(cls, user_query: str, chat_history: list) -> str:
         """
