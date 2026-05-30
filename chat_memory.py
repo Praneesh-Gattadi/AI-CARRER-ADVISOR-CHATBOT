@@ -1,4 +1,9 @@
+# ================== chat_memory.py ==================
+# Session-based conversation memory management
+# Isolated from UI and API layers
+
 import streamlit as st
+
 
 class ChatMemory:
     """
@@ -32,6 +37,21 @@ class ChatMemory:
     def get_history(cls) -> list:
         """Return full conversation history as a list of strings."""
         return st.session_state.get(cls.SESSION_KEY, [])
+
+    @classmethod
+    def get_structured_history(cls) -> list:
+        """Return history as list of structured message dicts for Chat APIs."""
+        structured = []
+        for msg in cls.get_history():
+            if ":" in msg:
+                role, content = msg.split(":", 1)
+                role = role.strip().lower()
+                # Map to standard role names: "user" or "assistant"
+                api_role = "user" if role == "user" else "assistant"
+                structured.append({"role": api_role, "content": content.strip()})
+            else:
+                structured.append({"role": "user", "content": msg})
+        return structured
 
     @classmethod
     def clear(cls):

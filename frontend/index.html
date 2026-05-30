@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrer Coach</title>
+    <!-- Google Fonts: Cormorant Garamond (Premium Serif) & Plus Jakarta Sans (Premium Sans-Serif) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Premium stylesheet -->
+    <link rel="stylesheet" href="style.css?v=2.0">
+</head>
+<body>
+
+    <!-- ── AUTHENTICATION SPLASH CONTAINER ──────────────────────────────────── -->
+    <div id="auth-container" class="auth-wrapper">
+        <div class="auth-card">
+            <button id="auth-theme-toggle-btn" class="auth-theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+            <div class="auth-header">
+                <h1>Carrer Coach</h1>
+                <p class="auth-subtitle">Enterprise SaaS Platform · Cryptographic Security · Model: Gemini 1.5</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button id="tab-btn-signin" class="auth-tab-btn active" onclick="switchAuthTab('signin')">
+                    <i class="fa-solid fa-key"></i> Sign In
+                </button>
+                <button id="tab-btn-signup" class="auth-tab-btn" onclick="switchAuthTab('signup')">
+                    <i class="fa-solid fa-user-plus"></i> Create Account
+                </button>
+            </div>
+
+            <!-- Sign In Form -->
+            <div id="form-signin" class="auth-form active">
+                <h2>Welcome Back!</h2>
+                <div class="input-group">
+                    <label for="signin-username"><i class="fa-solid fa-user"></i> Username</label>
+                    <input type="text" id="signin-username" placeholder="e.g. alex_stone">
+                </div>
+                <div class="input-group">
+                    <label for="signin-password"><i class="fa-solid fa-lock"></i> Password</label>
+                    <input type="password" id="signin-password" placeholder="••••••••">
+                </div>
+                <button class="primary-btn" onclick="handleSignIn()">Sign In</button>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div id="form-signup" class="auth-form">
+                <h2>Join Carrer Coach!</h2>
+                <div class="input-group">
+                    <label for="signup-username"><i class="fa-solid fa-user"></i> Choose Username</label>
+                    <input type="text" id="signup-username" placeholder="e.g. alex_stone">
+                </div>
+                <div class="input-group">
+                    <label for="signup-email"><i class="fa-solid fa-envelope"></i> Email Address</label>
+                    <input type="email" id="signup-email" placeholder="e.g. alex@example.com">
+                </div>
+                <div class="input-group">
+                    <label for="signup-password"><i class="fa-solid fa-lock"></i> Choose Password</label>
+                    <input type="password" id="signup-password" placeholder="••••••••">
+                </div>
+                <div class="input-group">
+                    <label for="signup-password-confirm"><i class="fa-solid fa-circle-check"></i> Confirm Password</label>
+                    <input type="password" id="signup-password-confirm" placeholder="••••••••">
+                </div>
+                <p class="password-criteria-text" style="font-size: 11px; color: var(--text-muted, #9ca3af); line-height: 1.4; margin: -5px 0 15px 0; display: flex; gap: 6px; align-items: flex-start;">
+                    <i class="fa-solid fa-circle-info" style="color: #a855f7; margin-top: 2px;"></i>
+                    <span>Password must be 8+ characters and contain uppercase, lowercase, numbers, and a special character.</span>
+                </p>
+                <button class="primary-btn" onclick="handleSignUp()">Create Account</button>
+            </div>
+
+            <!-- OTP Verification Form -->
+            <div id="form-otp" class="auth-form" style="display: none;">
+                <h2>Verify Your Email</h2>
+                <p style="font-size: 13px; color: var(--text-muted, #9ca3af); line-height: 1.5; margin-bottom: 20px; text-align: center;">
+                    We sent a 6-digit verification code to <strong id="otp-email-display" style="color: var(--primary);">alex@example.com</strong>.<br>Please enter it below to complete your registration.
+                </p>
+                <div class="input-group">
+                    <label for="otp-code"><i class="fa-solid fa-shield-halved"></i> Verification Code (OTP)</label>
+                    <input type="text" id="otp-code" placeholder="••••••" maxlength="6" style="text-align: center; letter-spacing: 6px; font-weight: 800; font-size: 22px; color: var(--primary); background: #FAF5EB; border: 1.5px solid var(--border-color); border-radius: var(--radius-sm); padding: 12px; outline: none; transition: all 0.3s;">
+                </div>
+                <button class="primary-btn" onclick="handleVerifyOTP()" style="margin-top: 10px;">Verify & Sign In</button>
+                
+                <div class="otp-actions" style="margin-top: 20px; display: flex; justify-content: space-between; font-size: 12px;">
+                    <button class="text-link-btn" onclick="handleResendOTP()" id="resend-otp-btn" style="background: none; border: none; color: var(--primary); cursor: pointer; font-weight: 600; font-family: inherit; padding: 0; outline: none;">
+                        <i class="fa-solid fa-rotate"></i> Resend Verification OTP
+                    </button>
+                    <button class="text-link-btn" onclick="cancelOTPFlow()" style="background: none; border: none; color: var(--text-muted, #9ca3af); cursor: pointer; font-family: inherit; padding: 0; outline: none;">
+                        <i class="fa-solid fa-arrow-left"></i> Back to Sign Up
+                    </button>
+                </div>
+            </div>
+
+            <div id="auth-alert" class="auth-alert hidden"></div>
+        </div>
+    </div>
+
+    <!-- ── CORE APPLICATION WORKSPACE ───────────────────────────────────────── -->
+    <div id="app-container" class="app-workspace hidden">
+        
+        <!-- SIDEBAR CONTAINER -->
+        <aside class="sidebar">
+            <div class="sidebar-brand" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div>
+                        <h3>Carrer Coach</h3>
+                    </div>
+                </div>
+                <button id="sidebar-collapse-btn" class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Collapse Sidebar">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <div class="sidebar-actions">
+                <button class="action-btn new-chat-btn" onclick="handleNewSession()">
+                    <i class="fa-solid fa-plus"></i> Start New Career Chat
+                </button>
+            </div>
+
+            <!-- Sessions List -->
+            <div class="sidebar-section">
+                <label class="section-label"><i class="fa-solid fa-history"></i> Saved Career Sessions</label>
+                <div class="session-dropdown-container">
+                    <select id="session-select" onchange="switchSession(this.value)">
+                        <!-- Populated by JavaScript -->
+                    </select>
+                </div>
+                <button class="delete-chat-btn" onclick="handleDeleteSession()">
+                    <i class="fa-solid fa-trash-can"></i> Delete Selected Chat
+                </button>
+            </div>
+
+            <!-- Unified Context Panel -->
+            <div class="sidebar-section" style="margin-top: 1rem;">
+                <label class="section-label"><i class="fa-solid fa-user-gear"></i> Advisor Context</label>
+                <div class="input-field" style="margin-top: 8px;">
+                    <label>Education Level</label>
+                    <select id="profile-education">
+                        <option value="Not specified">Not specified</option>
+                        <option value="High School / Student">High School / Student</option>
+                        <option value="Fresh Graduate / College Student">Fresh Graduate / College Student</option>
+                        <option value="Mid-career Switcher">Mid-career Switcher</option>
+                        <option value="Senior Professional">Senior Professional</option>
+                    </select>
+                </div>
+                <div class="input-field" style="margin-top: 8px;">
+                    <label>Experience Level</label>
+                    <select id="profile-experience">
+                        <option value="Not specified">Not specified</option>
+                        <option value="0-2 Years (Entry)">0-2 Years (Entry)</option>
+                        <option value="3-5 Years (Mid)">3-5 Years (Mid)</option>
+                        <option value="5+ Years (Senior)">5+ Years (Senior)</option>
+                    </select>
+                </div>
+                <div class="input-field" style="margin-top: 8px; margin-bottom: 8px;">
+                    <label>Target Goal / Role</label>
+                    <input type="text" id="profile-target" placeholder="e.g. Data Scientist, AI Engineer">
+                </div>
+                
+                <label class="section-label" style="margin-top: 12px; margin-bottom: 6px;"><i class="fa-solid fa-file-arrow-up"></i> Upload Resume/CV</label>
+                <div class="file-dropzone" onclick="triggerFileInput()">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <p>Upload PDF, TXT or DOCX</p>
+                    <input type="file" id="resume-file-input" class="hidden" accept=".pdf,.txt,.docx" onchange="handleResumeUpload(event)">
+                </div>
+                <div id="resume-status" class="resume-status hidden" style="margin-top: 8px;"></div>
+            </div>
+
+            <!-- Logout Widget -->
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="handleLogOut()">
+                    <i class="fa-solid fa-door-open"></i> Log Out
+                </button>
+                <div class="sidebar-credit">Powered by Gemini 1.5 & Search Grounding</div>
+            </div>
+        </aside>
+
+        <!-- MAIN DASHBOARD CONTENT AREA -->
+        <main class="main-content">
+            
+            <header class="main-header" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button id="sidebar-expand-btn" class="header-toggle-btn" onclick="toggleSidebar()" title="Expand Sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="header-title">
+                        <h1>Carrer Coach</h1>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <button id="theme-toggle-btn" class="secondary-btn" onclick="toggleTheme()" style="padding: 10px; width: 40px; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin: 0;" title="Toggle Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button class="download-btn" onclick="exportRoadmapReport()" style="width: auto; padding: 10px 16px; margin: 0; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-download"></i> <span>Export Roadmap</span>
+                    </button>
+                </div>
+            </header>
+
+
+
+            <!-- TAB CONTENT WRAPPER -->
+            <div class="tab-body">
+
+                <!-- 1. Strategy Coach Tab -->
+                <div id="tab-content-coach" class="tab-panel active">
+                    
+                    <!-- Chat Container -->
+                    <div id="chat-messages-box" class="chat-display">
+                        <!-- Populated by JavaScript -->
+                    </div>
+
+
+
+                    <!-- Message input bar -->
+                    <div class="chat-input-bar">
+                        <textarea id="chat-input-field" placeholder="Ask your career question here..." onkeydown="handleChatKeyPress(event)"></textarea>
+                        <button class="send-message-btn" onclick="submitChatMessage()">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ── GLOBAL FULLSCREEN LOADING TRANSITION OVERLAY ───────────────────────── -->
+    <div id="global-loader" class="loader-overlay hidden">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <p id="loader-text">Analyzing skillset paths...</p>
+        </div>
+    </div>
+
+    <!-- Script loading -->
+    <script src="app.js?v=2.0"></script>
+</body>
+</html>
