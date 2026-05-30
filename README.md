@@ -9,9 +9,7 @@ A production-ready, enterprise-grade Generative AI Career Advisor chatbot platfo
 
 * **Domain:** AI Career Strategy & Bespoke Executive Coaching
 * **Model:** Google Gemini GenAI SDK
-* **Primary Frontends:**
-  * **Primary SaaS App:** High-fidelity single-page HTML/CSS/JS frontend served by FastAPI on port `8000`.
-  * **Fallback / Legacy App:** Streamlined, synchronized Streamlit frontend on port `8501`.
+* **Primary Web App:** High-fidelity single-page HTML/CSS/JS frontend served by FastAPI on port `8000`.
 * **Database & Security:** Isolated SQLite Multi-Tenant Database with automated profile auto-saving.
 
 ---
@@ -51,13 +49,11 @@ A production-ready, enterprise-grade Generative AI Career Advisor chatbot platfo
 ## 🏗️ Technical Architecture
 ```
 User
- ├─► FastAPI Web App (serves frontend/ on Port 8000)
- │    ├─► db_manager.py     (SQLite Multi-Tenant Session Registry)
- │    ├─► gemini_service.py (Gemini API & Failover Engine)
- │    ├─► prompt_manager.py (Bespoke Strategy Persona Prompts)
- │    └─► email_service.py  (Safe ASCII SMTP Fallback Logging)
- │
- └─► Streamlit UI (app.py on Port 8501) - Synchronized layout & aesthetics
+ └─► FastAPI Web App (serves frontend/ on Port 8000)
+      ├─► db_manager.py     (SQLite Multi-Tenant Session Registry)
+      ├─► gemini_service.py (Gemini API & Failover Engine)
+      ├─► prompt_manager.py (Bespoke Strategy Persona Prompts)
+      └─► email_service.py  (Safe ASCII SMTP Fallback Logging)
 ```
 
 ---
@@ -88,22 +84,15 @@ Create a `.env` file in the root directory:
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-### 5. Start the Services
-
-#### Serve the Primary FastAPI Web Application (Port 8000):
+### 5. Start the Service
 ```bash
 python main.py
 ```
 Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-#### Serve the Streamlit Application (Port 8501):
-```bash
-streamlit run app.py
-```
-
 ---
 
 ## ☁️ Production AWS EC2 Deployment
 * Runs continuously in the background on the AWS EC2 Linux instance using `nohup` execution wrappers.
-* Exposes Port `8000` (FastAPI Web App) and Port `8501` (Streamlit Fallback).
+* Exposes Port `8000` (FastAPI Web App).
 * Guarded by standard Git protections via `.gitignore` to secure localized SQLite credentials and `.env` profiles.
