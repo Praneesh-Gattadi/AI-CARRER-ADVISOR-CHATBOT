@@ -1,81 +1,69 @@
-# Carrer Coach - Premium AI Career Strategy Hub
+# Carrer Coach — Premium AI Career Strategy Hub
 
-A production-ready, enterprise-grade Generative AI Career Advisor chatbot platform. Built on a modular architecture featuring a high-society luxury design system, stateful multi-tenant SQLite session isolation, and real-time Google Gemini grounding.
-
----
-
-## 📌 Project Overview
-**Carrer Coach** (strictly spelled *Carrer Coach*) provides elite, structured career strategy guidance to students, mid-career switchers, and executives. The platform features a high-end bespoke aesthetic paired with a high-speed direct registration and session persistence architecture.
-
-* **Domain:** AI Career Strategy & Bespoke Executive Coaching
-* **Model:** Google Gemini GenAI SDK
-* **Primary Web App:** High-fidelity single-page HTML/CSS/JS frontend served by FastAPI on port `8000`.
-* **Database & Security:** Isolated SQLite Multi-Tenant Database with automated profile auto-saving.
+A production-ready, multi-tenant Generative AI Career Strategy platform. Built on an enterprise-grade modular architecture featuring an editorial design system, stateful SQLite isolation, real-time Google Gemini grounding, and interactive roadmap visualization components.
 
 ---
 
-## 💎 Exquisite Brand Redesign & Features
+## 📌 Features & Visual Architecture
 
 ### 1. Organic Contrast Layout Color System
-* Features a cozy, organic warm beige background (`#E6D7C3`) for the main page layout.
-* Uses elegant ivory cream panels (`#FAF5EB`) for cards, login sheets, and the sidebar to create high-end visual contrast.
-* Input fields, dropdown selectors, file dropzones, and messaging bars are rendered in warm beige (`#E6D7C3`) inside ivory cards for a premium, tactile feel.
+* **Cozy Warm Beige Background (`#E6D7C3`)**: Establishes a comfortable, premium canvas.
+* **Ivory Cream Panels (`#FAF5EB`)**: Highlights cards, auth sheets, and context panels with high-end visual contrast.
+* **Warm Beige UI Controls**: Input fields, dropdown select dropdowns, drag-and-drop file areas, and chat message bars use organic backgrounds for a premium, tactile interaction system.
 
-### 2. Stateful Light & Dark Theme Options
-* **Splash Screen Toggler**: An absolute-positioned premium toggle button on the login/signup card lets users switch modes before logging in.
-* **Chat Header Toggler**: A dedicated theme toggler placed in the main chat header makes switching themes seamless.
-* **Zero Visual Flash (IIFE)**: Equipped the frontend with an immediately-invoked execution block to apply the saved theme before the main DOM loads, preventing any disruptive theme flashing.
-* **Stateful Cache**: Automatically caches and restores the user's selected mode preference (`career_coach_theme`) in local storage.
+### 2. Stateful Light & Dark Theme System
+* **Dual Toggles**: Dedicated controls placed in both the splash screen and the chat workspace header.
+* **Zero Visual Flash (IIFE)**: Equipped with an immediately-invoked execution script block to load preference values before the main DOM renders, preventing disruptive white flash.
+* **Local Storage Cache**: Automatically restores the user's selected mode preference (`career_coach_theme`).
 
-### 3. Apple-Style Smooth Curves & Design Tokens
-* Replaced all sharp edges with strict, relative rounded design tokens in `:root`:
-  * `--radius-xl` (`32px`): Auth splash sheets & large cards.
-  * `--radius-lg` (`24px`): Chat workspace boxes & curved sidebar right edges.
-  * `--radius-md` (`16px`): Buttons, dropzones, & bubble frames.
-  * `--radius-sm` (`12px`): Input fields & dropdown selectors.
-* Added rounded top-right and bottom-right edges to the sidebar, cleanly wrapping its border line while leaving the left side viewport-flush.
+### 3. Apple-Style Design Tokens
+* Strictly rounded relative borders using `:root` design tokens:
+  * `--radius-xl` (`32px`): Splash auth forms.
+  * `--radius-lg` (`24px`): Main chat workspace container.
+  * `--radius-md` (`16px`): Primary action buttons and text input areas.
+  * `--radius-sm` (`12px`): Input fields, dropdown menus, and text bubble frames.
+* Fluid sidebar layout wrapping rounded right edges cleanly.
 
-### 4. Elite Typography Pairing
-* **Serif Headers (`Cormorant Garamond`)**: All headings (`h1`, `h2`, `h3`) utilize this elegant, classical editorial serif typeface to establish an expensive, professional editorial look.
-* **Geometric Sans-Serif Body (`Plus Jakarta Sans`)**: Body copy, inputs, dropdown menus, and chat bubbles use this modern geometric typeface for supreme legibility.
+### 4. Interactive Mermaid.js Roadmap Explorer
+* **Viewport Explorer**: Clicking on any flowchart diagram opens a high-fidelity glassmorphic viewer.
+* **Interactive Transforms**: Features smooth viewport click-and-drag panning and limits the zoom multiplier between `0.2x` and `5.0x`.
+* **Multi-Format Image Downloads**: Direct native downloads of diagrams in vector **SVG** format or high-resolution **PNG** format (respecting current light/dark themes).
 
-### 5. Direct Signup & Redirection Flow
-* **Direct Database Registration**: Bypasses secondary verification checks to directly save new user records into the primary database on signup.
-* **Pre-Filled Sign In Redirect**: Registration automatically redirects the user to the **Sign In** tab, pre-fills their newly created username for convenience, and shows a success alert.
-
-### 6. Minimalist Workspace Layout
-* Pruned all visual clutter to prioritize clean, distraction-free reading:
-  * Removed quick-start suggestions and empty-state placeholders.
-  * Pruned the authenticated user branding displays from the brand header.
-  * Removed all rocket emoji symbols and logos for a purely typographical, ultra-high-end aesthetic.
+### 5. Multi-Format Strategy Export Hub
+* Accessible from the main header, allowing users to save their entire conversation logs:
+  * **Markdown Format (.md)**: Highly readable, structured documentation.
+  * **Enterprise JSON (.json)**: Complete context metadata alongside turn-by-turn chat history.
+  * **Bespoke Print-Ready HTML (.html)**: Pre-styled editorial format designed specifically for single-click printing to **PDF** using standard browser printing engines (`Ctrl + P`).
 
 ---
 
-## 🏗️ Technical Architecture
-```
-User
- └─► FastAPI Web App (serves frontend/ on Port 8000)
-      ├─► db_manager.py     (SQLite Multi-Tenant Session Registry)
-      ├─► gemini_service.py (Gemini API & Failover Engine)
-      ├─► prompt_manager.py (Bespoke Strategy Persona Prompts)
-      └─► email_service.py  (Safe ASCII SMTP Fallback Logging)
+## 🏗️ System Architecture
+
+```text
+User Workspace
+ └─► FastAPI Web App Server (Port 8000)
+      ├─► Static Assets (index.html, style.css, app.js)
+      ├─► db_manager.py     (Multi-Tenant SQLite isolated database)
+      ├─► gemini_service.py (Gemini official GenAI Client with typewriter fallback streaming)
+      ├─► prompt_manager.py (Persona prompting context)
+      └─► email_service.py  (Safe ASCII SMTP verification logger)
 ```
 
 ---
 
-## ⚙️ Local Development Setup
+## ⚙️ Local Installation & Development Setup
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Praneesh-Gattadi/ai-career-advisor-chatbot.git
-cd ai-career-advisor-chatbot
+git clone https://github.com/Praneesh-Gattadi/AI-CARRER-ADVISOR-CHATBOT.git
+cd AI-CARRER-ADVISOR-CHATBOT
 ```
 
-### 2. Set Up a Virtual Environment
+### 2. Configure Virtual Environment
 ```bash
 python -m venv venv
-venv\Scripts\activate  # Windows
-source venv/bin/activate  # macOS/Linux
+source venv/bin/activate  # macOS / Linux
+venv\Scripts\activate     # Windows PowerShell
 ```
 
 ### 3. Install Dependencies
@@ -83,21 +71,41 @@ source venv/bin/activate  # macOS/Linux
 pip install -r requirements.txt
 ```
 
-### 4. Configure Your Environment Variables
-Create a `.env` file in the root directory:
+### 4. Set Up Environment variables
+Create a `.env` file in the root workspace folder:
 ```env
-GEMINI_API_KEY=your_gemini_api_key_here
+GOOGLE_API_KEY=your_gemini_api_key_here
 ```
 
-### 5. Start the Service
+### 5. Launch the Application
 ```bash
 python main.py
 ```
-Open [http://localhost:8000](http://localhost:8000) in your browser.
+Open **[http://localhost:8000](http://localhost:8000)** in your web browser.
 
 ---
 
-## ☁️ Production AWS EC2 Deployment
-* Runs continuously in the background on the AWS EC2 Linux instance using `nohup` execution wrappers.
-* Exposes Port `8000` (FastAPI Web App).
-* Guarded by standard Git protections via `.gitignore` to secure localized SQLite credentials and `.env` profiles.
+## ☁️ AWS EC2 Linux Deployment Protocol
+
+The application runs continuously on AWS EC2 servers using background process wrappers.
+
+### 1. Secure Private Key Permissions (Windows PowerShell)
+Before connecting via SSH, restrict file permissions:
+```powershell
+icacls .\chatbot-key.pem /inheritance:r
+icacls .\chatbot-key.pem /grant:r "$($env:USERNAME):(R)"
+```
+
+### 2. Establish SSH Terminal Connection
+```powershell
+ssh -i .\chatbot-key.pem ubuntu@54.91.187.103
+```
+
+### 3. Sync Changes and Start Server
+```bash
+cd ai-career-advisor-chatbot
+git pull origin main
+source venv/bin/activate
+nohup python3 main.py > app.log 2>&1 &
+```
+The server is accessible on Port `8000` (`http://54.91.187.103:8000`).
