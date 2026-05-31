@@ -230,6 +230,74 @@
         </main>
     </div>
 
+    <!-- ── MERMAID EXPLORER MODAL ───────────────────────────────────────────── -->
+    <div id="mermaid-modal" class="modal-overlay hidden" onclick="closeMermaidModal(event)">
+        <div class="modal-card mermaid-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Roadmap Explorer</h2>
+                <button class="modal-close-btn" onclick="closeMermaidModal(event)" title="Close Explorer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body mermaid-modal-body">
+                <div class="mermaid-viewer-controls">
+                    <button onclick="zoomMermaid(1.2)" title="Zoom In"><i class="fa-solid fa-plus"></i></button>
+                    <button onclick="zoomMermaid(0.8)" title="Zoom Out"><i class="fa-solid fa-minus"></i></button>
+                    <button onclick="resetMermaid()" title="Reset View"><i class="fa-solid fa-compress"></i></button>
+                    <span class="control-separator">|</span>
+                    <button onclick="downloadMermaidSVG()" title="Download SVG"><i class="fa-solid fa-file-image"></i> SVG</button>
+                    <button onclick="downloadMermaidPNG()" title="Download PNG"><i class="fa-solid fa-file-arrow-down"></i> PNG</button>
+                </div>
+                <div class="mermaid-viewport" id="mermaid-viewport" onmousedown="startMermaidPan(event)" onmousemove="dragMermaidPan(event)" onmouseup="stopMermaidPan()" onmouseleave="stopMermaidPan()">
+                    <div class="mermaid-canvas-wrapper" id="mermaid-canvas-wrapper">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── EXPORT STRATEGY HUB MODAL ───────────────────────────────────────── -->
+    <div id="export-modal" class="modal-overlay hidden" onclick="closeExportModal(event)">
+        <div class="modal-card export-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2>Export Strategy Hub</h2>
+                <button class="modal-close-btn" onclick="closeExportModal(event)" title="Close Export Menu">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-description">Choose a premium format to save your career strategy roadmap.</p>
+                <div class="export-options-grid">
+                    <div class="export-option-card" onclick="triggerExport('markdown')">
+                        <div class="export-icon"><i class="fa-brands fa-markdown"></i></div>
+                        <div class="export-info">
+                            <h4>Markdown Format (.md)</h4>
+                            <p>Structured documentation perfect for personal notes or GitHub portfolios.</p>
+                        </div>
+                        <div class="export-action"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                    <div class="export-option-card" onclick="triggerExport('json')">
+                        <div class="export-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="export-info">
+                            <h4>Enterprise Dataset (.json)</h4>
+                            <p>Machine-readable JSON data with complete profile context and history.</p>
+                        </div>
+                        <div class="export-action"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                    <div class="export-option-card" onclick="triggerExport('html')">
+                        <div class="export-icon"><i class="fa-solid fa-file-code"></i></div>
+                        <div class="export-info">
+                            <h4>Editorial HTML / PDF (.html)</h4>
+                            <p>A styled report designed for beautiful viewing or printing direct to PDF.</p>
+                        </div>
+                        <div class="export-action"><i class="fa-solid fa-chevron-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ── GLOBAL FULLSCREEN LOADING TRANSITION OVERLAY ───────────────────────── -->
     <div id="global-loader" class="loader-overlay hidden">
         <div class="loader-content">
@@ -239,6 +307,23 @@
     </div>
 
     <!-- Script loading -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'base',
+            themeVariables: {
+                background: '#FAF5EB',
+                primaryColor: '#FAF5EB',
+                primaryTextColor: '#2E251B',
+                primaryBorderColor: 'rgba(107, 85, 56, 0.2)',
+                lineColor: '#736555',
+                secondaryColor: '#E6D7C3',
+                tertiaryColor: '#FAF5EB'
+            },
+            securityLevel: 'loose'
+        });
+    </script>
     <script src="app.js?v=2.0"></script>
 </body>
 </html>
