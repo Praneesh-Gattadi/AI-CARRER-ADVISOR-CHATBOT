@@ -3,6 +3,7 @@ import os
 import uuid
 import json
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form, Query
+from fastapi.responses import StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -248,20 +249,25 @@ def send_chat_message(req: ChatSendRequest):
         resume_text=req.resume_text if req.resume_text else None
     )
     
-    try:
-        response_text = gemini.generate_response(
-            messages=formatted,
-            system_instruction=system_instruction
-        )
-        # Save assistant message
-        DBManager.add_message(req.session_id, "assistant", response_text)
-        
-        # Calculate parsed checklist items
-        goals = parse_goals(response_text)
-        
-        return {"response": response_text, "goals": goals}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Gemini error: {str(e)}")
+    def event_stream():
+        full_response_parts = []
+        try:
+            for chunk in gemini.generate_response_stream(
+                messages=formatted,
+                system_instruction=system_instruction
+            ):
+                full_response_parts.append(chunk)
+                yield chunk
+            
+            # Combine and save full message to DB on completion
+            combined = "".join(full_response_parts)
+            if combined.strip():
+                DBManager.add_message(req.session_id, "assistant", combined)
+        except Exception as e:
+            logger.error(f"Streaming error: {e}")
+            yield f"\n⚠️ **Streaming Error:** {str(e)}"
+
+    return StreamingResponse(event_stream(), media_type="text/plain")
 
 class ProfileSaveRequest(BaseModel):
     username: str
